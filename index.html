@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CryptoCard · Virtual Crypto Credit Cards</title>
+  <meta name="description" content="Generate virtual crypto credit cards for 10 cryptocurrencies. Educational demo only." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- html2canvas: export the card as PNG -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============ BACKGROUND ============ -->
+  <div class="bg" aria-hidden="true">
+    <span class="orb orb-1"></span>
+    <span class="orb orb-2"></span>
+    <span class="orb orb-3"></span>
+    <div class="grid-lines"></div>
+  </div>
+
+  <!-- ============ NAVBAR ============ -->
+  <nav class="nav" id="nav">
+    <a href="#home" class="nav-logo">
+      <span class="nav-logo-mark">◈</span>
+      <span class="nav-logo-text">CryptoCard</span>
+    </a>
+
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home"     class="nav-link active">Home</a></li>
+      <li><a href="#about"    class="nav-link">About</a></li>
+      <li><a href="#contacts" class="nav-link">Contacts</a></li>
+      <li><a href="#faq"      class="nav-link">FAQ</a></li>
+    </ul>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero" id="home">
+    <div class="badge">✦ Educational Project · Demo ✦</div>
+
+    <h1 class="hero-title">CryptoCard</h1>
+
+    <p class="hero-slogan">Your virtual credit card, powered by the future.</p>
+
+    <p class="hero-sub">
+      Instantly generate a virtual card for your 10 favorite cryptocurrencies.
+      Fake numbers, real design: no sign-up, no risk.
+    </p>
+
+    <a href="#generator" class="hero-cta">Start generating ↓</a>
+  </header>
+
+  <!-- ============ GENERATOR ============ -->
+  <main class="layout" id="generator">
+
+    <!-- ---------- CARD COLUMN ---------- -->
+    <section class="stage">
+      <div class="card" id="card" role="button" tabindex="0" aria-label="Virtual card, click to flip">
+        <div class="card-inner" id="cardInner">
+
+          <!-- FRONT -->
+          <article class="card-face card-front theme-gold" id="cardFront">
+            <div class="face-head">
+              <div class="chip" aria-hidden="true"></div>
+              <div class="crypto-tag">
+                <span class="dot" id="cryptoDot"></span>
+                <span class="crypto-glyph-sm" id="cryptoGlyph">₿</span>
+                <span class="crypto-tag-name" id="cryptoName">Bitcoin</span>
+              </div>
+            </div>
+
+            <div class="face-number" id="cardNumber">0000 0000 0000 0000</div>
+
+            <div class="face-foot">
+              <div class="foot-field">
+                <span class="foot-label">Card Holder</span>
+                <span class="foot-value" id="cardHolder">JOHN DOE</span>
+              </div>
+              <div class="foot-field">
+                <span class="foot-label">Expires</span>
+                <span class="foot-value" id="cardExpiry">08/29</span>
+              </div>
+              <div class="foot-brand">
+                <span class="brand-mark">◈</span>
+                <span class="brand-text">CRYPTOCARD</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- BACK -->
+          <article class="card-face card-back theme-gold" id="cardBack">
+            <div class="magstripe" aria-hidden="true"></div>
+            <div class="back-body">
+              <div class="back-row">
+                <span class="foot-label">CVV</span>
+                <span class="cvv-box" id="cardCvv">000</span>
+              </div>
+              <p class="back-note">
+                Demo virtual card · No real value<br />
+                For educational use only
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <button class="btn btn-ghost" id="flipBtn" type="button">⟲ Show back</button>
+        <button class="btn btn-ghost" id="copyBtn" type="button">⧉ Copy number</button>
+        <button class="btn btn-gold" id="downloadBtn" type="button">📥 Download image</button>
+      </div>
+    </section>
+
+    <!-- ---------- PANEL COLUMN ---------- -->
+    <section class="panel">
+
+      <h2 class="panel-title">Choose your cryptocurrency</h2>
+
+      <div class="crypto-grid" id="cryptoGrid"><!-- generated by JS --></div>
+
+      <label class="text-field">
+        <span>Card holder name</span>
+        <input type="text" id="holderInput" placeholder="John Doe" maxlength="22" autocomplete="off" />
+      </label>
+
+      <div class="swatches" role="group" aria-label="Card color theme">
+        <button class="swatch gold active" data-theme="gold" type="button">Classic Gold</button>
+        <button class="swatch silver" data-theme="silver" type="button">Metallic Silver</button>
+      </div>
+
+      <button class="btn btn-primary" id="generateBtn" type="button">⚡ Generate new card</button>
+
+      <div class="info-row">
+        <div class="info">
+          <span class="info-label">Balance</span>
+          <span class="info-value" id="balance">0.8421 BTC</span>
+        </div>
+        <div class="info">
+          <span class="info-label">Network</span>
+          <span class="info-value" id="network">Bitcoin Network</span>
+        </div>
+        <div class="info">
+          <span class="info-label">Status</span>
+          <span class="info-value ok">● Active</span>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="section" id="about">
+    <div class="section-inner">
+      <span class="section-tag">About</span>
+      <h2 class="section-title">What is CryptoCard?</h2>
+
+      <p class="section-text">
+        CryptoCard is a <strong>front-end design demo</strong> that shows what a virtual
+        cryptocurrency credit card could look like. It was built with pure HTML, CSS and
+        vanilla JavaScript — no frameworks, no backend, no tracking.
+      </p>
+
+      <div class="cards-grid">
+        <article class="feature-card">
+          <span class="feature-icon">🪙</span>
+          <h3>10 Cryptocurrencies</h3>
+          <p>Bitcoin, Ethereum, Solana, BNB, Cardano, XRP, Polkadot, Dogecoin, Avalanche and Chainlink — each with its own color, glyph and expiry date.</p>
+        </article>
+
+        <article class="feature-card">
+          <span class="feature-icon">🎨</span>
+          <h3>Two Premium Themes</h3>
+          <p>Switch between a classic gold gradient and a metallic silver finish. The back of the card adapts automatically.</p>
+        </article>
+
+        <article class="feature-card">
+          <span class="feature-icon">📥</span>
+          <h3>Export as Image</h3>
+          <p>Once you've made your choices, download the card as a high-resolution PNG — front or back, whichever is visible.</p>
+        </article>
+
+        <article class="feature-card">
+          <span class="feature-icon">🔒</span>
+          <h3>100% Fictional</h3>
+          <p>Every number, CVV, expiry date and balance is randomly generated. Nothing is real and nothing leaves your browser.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTS ============ -->
+  <section class="section" id="contacts">
+    <div class="section-inner">
+      <span class="section-tag">Contacts</span>
+      <h2 class="section-title">Get in touch</h2>
+
+      <p class="section-text">
+        This is a demo project, but feedback is always welcome. Reach out through any of
+        the channels below — the details are fictional for the purposes of this showcase.
+      </p>
+
+      <div class="contact-grid">
+        <a class="contact-card" href="mailto:hello@cryptocard.demo">
+          <span class="contact-icon">✉</span>
+          <span class="contact-label">Email</span>
+          <span class="contact-value">hello@cryptocard.demo</span>
+        </a>
+
+        <a class="contact-card" href="tel:+10000000000">
+          <span class="contact-icon">☎</span>
+          <span class="contact-label">Phone</span>
+          <span class="contact-value">+1 (000) 000-0000</span>
+        </a>
+
+        <a class="contact-card" href="#contacts">
+          <span class="contact-icon">⌂</span>
+          <span class="contact-label">Address</span>
+          <span class="contact-value">123 Blockchain Ave, Demo City</span>
+        </a>
+      </div>
+
+      <form class="contact-form" id="contactForm" novalidate>
+        <div class="form-row">
+          <label class="text-field">
+            <span>Your name</span>
+            <input type="text" id="contactName" placeholder="Jane Doe" autocomplete="name" />
+          </label>
+
+          <label class="text-field">
+            <span>Your email</span>
+            <input type="email" id="contactEmail" placeholder="jane@example.com" autocomplete="email" />
+          </label>
+        </div>
+
+        <label class="text-field">
+          <span>Message</span>
+          <textarea id="contactMessage" rows="4" placeholder="Write your message here..."></textarea>
+        </label>
+
+        <button class="btn btn-primary" type="submit">Send message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section" id="faq">
+    <div class="section-inner">
+      <span class="section-tag">FAQ</span>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>Are these real credit cards?</summary>
+          <p>No. Every card number, CVV, expiry date and balance on this page is completely fictional and randomly generated in your browser. Nothing is connected to any bank, payment network or blockchain.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can I use these numbers for payments?</summary>
+          <p>Absolutely not. The numbers are invalid by design and cannot be used for any transaction. This project exists purely to demonstrate UI and CSS design techniques.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Why is the first digit always a 4?</summary>
+          <p>In real card numbering, the leading digit indicates the card network. "4" is associated with Visa. Here it's just a visual detail to make the demo look authentic.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>How do I download the card as an image?</summary>
+          <p>Make your selections (cryptocurrency, theme, holder name), flip the card to the side you want to save, then click <strong>Download image</strong>. A high-resolution PNG will be saved to your device.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Is any data sent to a server?</summary>
+          <p>No. This is a static front-end project. Everything happens locally in your browser — no analytics, no cookies, no backend calls.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can I reuse this code in my own project?</summary>
+          <p>Yes, feel free to study and adapt the code for learning purposes. Just remember to keep the demo nature clear and never present the generated numbers as real.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <p class="footer-brand">◈ CryptoCard</p>
+    <p>
+      <strong>Disclaimer:</strong> all cards, numbers, expiry dates and balances shown on this
+      page are <em>entirely fictional</em> and randomly generated for educational and
+      demonstration purposes only. No real data, no transactions, no connection to any
+      payment network.
+    </p>
+    <p class="footer-copy">© <span id="year">2025</span> CryptoCard Demo · Built with HTML, CSS &amp; JavaScript</p>
+  </footer>
+
+  <!-- ============ TOAST ============ -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
